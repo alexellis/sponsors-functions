@@ -10,6 +10,9 @@ Seal secrets:
 
 ```sh
 export WEBHOOK=""
+export SLACK=""
 
-faas-cli cloud seal --name alexellis-sponsors --literal webhook-secret=$WEBHOOK
+faas-cli cloud seal --name alexellis-sponsors \
+ --literal webhook-secret=$WEBHOOK \
+ --literal slack-url=$SLACK
 ```
