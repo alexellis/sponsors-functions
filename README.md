@@ -1,5 +1,7 @@
 # sponsors-functions
 
+This function is hosted on [OpenFaaS Cloud](https://docs.openfaas.com/openfaas-cloud/community-cluster/), see the [commits page for the build logs](https://github.com/alexellis/sponsors-functions/commits/master). The dashboard is private, but contains runtime logs and metrics.
+
 ## Usage
 
 This function receives and validates a webhook from [GitHub Sponsors](https://github.com/sponsors) using the [node12 template](https://github.com/openfaas/templates/) from [OpenFaaS](https://github.com/openfaas/).
@@ -13,6 +15,14 @@ It is triggered by any event from [GitHub Sponsors](https://github.com/sponsors/
 ## Next tasks
 
 Switch on each event, and send a "pretty" string such as Person X just sponsored you, or Person X cancelled their sponsorship.
+
+This will involve unpicking the schema and looking at each event such as `created` and what interesting string we want to create from it.
+
+```json
+{ "action": "created", "sponsorship": { } }
+```
+
+See also: [SponsorshipEvent](https://developer.github.com/v3/activity/events/types/#sponsorshipevent)
 
 ## Development
 
