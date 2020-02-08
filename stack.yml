@@ -9,4 +9,5 @@ functions:
     image: sponsors-receiver:latest
     environment:
       write_debug: true
-
+    secrets:
+    - sponsors

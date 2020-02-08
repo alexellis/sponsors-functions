@@ -1,11 +1,16 @@
 'use strict'
 
 module.exports = async (event, context) => {
-  const result = {
-    'status': 'Input: ' + JSON.stringify(event.body)
+  const payload = {
+    'status': 'Input: ' + JSON.stringify(event.body),
+    'headers': event.headers,
+    'path': event.path,
+    'query': event.query
   }
+
+  console.log(payload)
 
   return context
     .status(200)
-    .succeed(result)
+    .succeed({'done': 'OK'})
 }
