@@ -1,11 +1,11 @@
-"use strict"
+'use strict'
 
 module.exports = async (event, context) => {
-    const result =             {
-        status: "Received input: " + JSON.stringify(event.body)
-    };
+  const result = {
+    'status': 'Input: ' + JSON.stringify(event.body)
+  }
 
-    return context
-        .status(200)
-        .succeed(result);
+  return context
+    .status(200)
+    .succeed(result)
 }
