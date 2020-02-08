@@ -3,6 +3,7 @@
 const crypto = require('crypto')
 const fs = require('fs')
 const fsPromises = fs.promises
+const hashMethod = 'sha1'
 
 module.exports = async (event, context) => {
   const payload = {
@@ -16,7 +17,7 @@ module.exports = async (event, context) => {
 
   let secret = await fsPromises.readFile('/var/openfaas/secrets/webhook-secret', 'utf8')
 
-  let hmac = crypto.createHmac('sha256', secret)
+  let hmac = crypto.createHmac(hashMethod, secret)
 
   hmac.update(event.body)
   let digest = hmac.digest('hex')
