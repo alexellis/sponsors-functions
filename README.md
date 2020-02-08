@@ -1,5 +1,11 @@
 # sponsors-functions
 
+## Usage
+
+This function receives and validates a webhook from [GitHub Sponsors](https://github.com/sponsors) using the [node12 template](https://github.com/openfaas/templates/) from [OpenFaaS](https://github.com/openfaas/).
+
+## Development
+
 Seal secrets:
 
 ```sh
