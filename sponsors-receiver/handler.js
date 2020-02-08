@@ -5,16 +5,9 @@ const fs = require('fs')
 const fsPromises = fs.promises
 const hashMethod = 'sha1'
 
+const axios = require('axios')
+
 module.exports = async (event, context) => {
-  const payload = {
-    'status': 'Input: ' + JSON.stringify(event.body.toString()),
-    'headers': event.headers,
-    'path': event.path,
-    'query': event.query
-  }
-
-  console.log(payload)
-
   let secret = await fsPromises.readFile('/var/openfaas/secrets/webhook-secret', 'utf8')
 
   let hmac = crypto.createHmac(hashMethod, secret)
@@ -25,6 +18,27 @@ module.exports = async (event, context) => {
 
   let validDigest = payloadDigest === `sha1=${digest}`
   console.log(`Signature: ${payloadDigest} vs ${digest}, valid: ${validDigest}`)
+
+  const payload = {
+    'body': event.body.toString(),
+    'headers': event.headers,
+    'path': event.path,
+    'query': event.query,
+    'validDigest': validDigest
+  }
+
+  console.log(payload)
+
+  if (validDigest) {
+    let slackURL = await fsPromises.readFile('/var/openfaas/secrets/slack-url', 'utf8')
+    let options = {
+      'method': 'POST',
+      'headers': { 'content-type': 'application/json' },
+      'data': payload,
+      'url': slackURL
+    }
+    axios.post(options)
+  }
 
   return context
     .status(200)
