@@ -7,7 +7,7 @@ const hashMethod = 'sha1'
 
 module.exports = async (event, context) => {
   const payload = {
-    'status': 'Input: ' + JSON.stringify(event.body),
+    'status': 'Input: ' + JSON.stringify(event.body.toString()),
     'headers': event.headers,
     'path': event.path,
     'query': event.query
