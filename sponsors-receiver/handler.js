@@ -21,10 +21,12 @@ module.exports = async (event, context) => {
 
   hmac.update(event.body)
   let digest = hmac.digest('hex')
+  let payloadDigest = event.headers['x-hub-signature']
 
-  console.log(`Signature: ${event.headers['x-hub-signature']} vs ${digest}`)
+  let validDigest = payloadDigest === `sha1=${digest}`
+  console.log(`Signature: ${payloadDigest} vs ${digest}, valid: ${validDigest}`)
 
   return context
     .status(200)
-    .succeed({'done': 'OK'})
+    .succeed({'done': 'OK', 'validDigest': validDigest})
 }
