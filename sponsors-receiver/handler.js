@@ -31,14 +31,14 @@ module.exports = async (event, context) => {
 
   if (validDigest) {
     let slackURL = await fsPromises.readFile('/var/openfaas/secrets/slack-url', 'utf8')
-    console.log(`Slack URL: ${slackURL}`)
+
     let options = {
       'method': 'POST',
       'headers': { 'content-type': 'application/json' },
       'data': payload,
       'url': slackURL
     }
-    axios.post(options)
+    axios(options)
   }
 
   return context
