@@ -38,13 +38,12 @@ module.exports = async (event, context) => {
         case 'cancelled':
         case 'pending_cancellation':
           emoticon = ':thumbsdown:'
-        break
-
+          break
         case 'edited':
         case 'tier_changed':
         case 'pending_tier_change':
           emoticon = ':warning:'
-        break
+          break
       }
 
       let text = `Sponsorship ${body.action} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
