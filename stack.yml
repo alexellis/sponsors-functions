@@ -2,6 +2,7 @@ version: 1.0
 provider:
   name: openfaas
   gateway: http://127.0.0.1:8080
+
 functions:
   sponsors-receiver:
     lang: node12
@@ -10,5 +11,7 @@ functions:
     environment:
       write_debug: true
       RAW_BODY: true
+    labels:
+      com.openfaas.scale.zero: false
     secrets:
     - sponsors
