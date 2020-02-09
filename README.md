@@ -1,5 +1,10 @@
 # sponsors-functions
 
+GitHub Sponsors webhook receiver and Slack forwarder, written in Node.js
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![OpenFaaS](https://img.shields.io/badge/openfaas-serverless-blue.svg)](https://www.openfaas.com)
+
 This function is hosted on [OpenFaaS Cloud](https://docs.openfaas.com/openfaas-cloud/community-cluster/), see the [commits page for the build logs](https://github.com/alexellis/sponsors-functions/commits/master). The dashboard is private, but contains runtime logs and metrics.
 
 ## Usage
