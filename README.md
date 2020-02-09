@@ -21,24 +21,27 @@ There's a switch statement on each event, which sends send a "pretty" string suc
 
 ![Example](https://user-images.githubusercontent.com/6358735/74099171-b4a17580-4b18-11ea-8fd9-7139b6a4a05c.png)
 
+## Development or getting your own
 
-## Development
+* Fork the repo
 
-Fork the repo
+* [Add OpenFaaS Cloud integration to your repo, the community cluster](https://github.com/openfaas/community-cluster) is free to use for hosting.
 
-Add OpenFaaS Cloud integration to your repo, the community cluster is free to use for hosting.
+* Create a channel and add an [incoming webhook integration on Slack](https://api.slack.com/messaging/webhooks)
 
-Seal your own secrets, change `alexellis` for your own username.
+* Create the webhook on GitHub for your URL and enter a webhook secret
 
-```sh
-export WEBHOOK=""
-export SLACK=""
+* Seal your own secrets, change `alexellis` for your own username.
 
-faas-cli cloud seal --name alexellis-sponsors \
- --literal webhook-secret=$WEBHOOK \
- --literal slack-url=$SLACK
-```
+ ```sh
+ export WEBHOOK=""
+ export SLACK=""
 
-Fire a test event.
+ faas-cli cloud seal --name alexellis-sponsors \
+  --literal webhook-secret=$WEBHOOK \
+  --literal slack-url=$SLACK
+ ```
+
+* Fire a test event from your sponsors page
 
 See also: [SponsorshipEvent](https://developer.github.com/v3/activity/events/types/#sponsorshipevent)
