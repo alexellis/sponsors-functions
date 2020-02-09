@@ -32,7 +32,10 @@ module.exports = async (event, context) => {
   if (validDigest) {
     let slackURL = await fsPromises.readFile('/var/openfaas/secrets/slack-url', 'utf8')
 
-    let slackPayload = { 'text': JSON.stringify(payload) }
+    let body = JSON.parse(event.body)
+    let text = `Sponsorship ${body.action} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
+
+    let slackPayload = { 'text': text }
 
     let options = {
       'method': 'POST',
