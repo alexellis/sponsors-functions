@@ -32,7 +32,7 @@ module.exports = async (event, context) => {
   if (validDigest) {
     let body = JSON.parse(event.body)
 
-    if(body.action) {
+    if (body.action) {
       let emoticon = ':thumbsup:'
       switch (body.action) {
         case 'cancelled':
