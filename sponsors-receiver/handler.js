@@ -33,7 +33,21 @@ module.exports = async (event, context) => {
     let slackURL = await fsPromises.readFile('/var/openfaas/secrets/slack-url', 'utf8')
 
     let body = JSON.parse(event.body)
-    let text = `Sponsorship ${body.action} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
+    let emoticon = ':thumbsup:'
+    switch (body.action) {
+      case 'cancelled':
+      case 'pending_cancellation':
+        emoticon = ':thumbsdown:'
+      break
+
+      case 'edited':
+      case 'tier_changed':
+      case 'pending_tier_change':
+        emoticon = ':warning:'
+      break
+    }
+
+    let text = `Sponsorship ${body.action} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
 
     let slackPayload = { 'text': text }
 
