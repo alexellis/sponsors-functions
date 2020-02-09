@@ -12,21 +12,18 @@ Messages that pass HMAC are then sent over to a secret webhook URL and appear in
 
 It is triggered by any event from [GitHub Sponsors](https://github.com/sponsors/alexellis)
 
-## Next tasks
+There's a switch statement on each event, which sends send a "pretty" string such as Person X just sponsored you, or Person X cancelled their sponsorship including an appropriate emoticon for the action taken by the user.
 
-Switch on each event, and send a "pretty" string such as Person X just sponsored you, or Person X cancelled their sponsorship.
+![Example](https://user-images.githubusercontent.com/6358735/74099171-b4a17580-4b18-11ea-8fd9-7139b6a4a05c.png)
 
-This will involve unpicking the schema and looking at each event such as `created` and what interesting string we want to create from it.
-
-```json
-{ "action": "created", "sponsorship": { } }
-```
-
-See also: [SponsorshipEvent](https://developer.github.com/v3/activity/events/types/#sponsorshipevent)
 
 ## Development
 
-Seal secrets:
+Fork the repo
+
+Add OpenFaaS Cloud integration to your repo, the community cluster is free to use for hosting.
+
+Seal your own secrets, change `alexellis` for your own username.
 
 ```sh
 export WEBHOOK=""
@@ -36,3 +33,7 @@ faas-cli cloud seal --name alexellis-sponsors \
  --literal webhook-secret=$WEBHOOK \
  --literal slack-url=$SLACK
 ```
+
+Fire a test event.
+
+See also: [SponsorshipEvent](https://developer.github.com/v3/activity/events/types/#sponsorshipevent)
