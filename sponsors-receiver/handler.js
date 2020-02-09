@@ -30,34 +30,35 @@ module.exports = async (event, context) => {
   console.log(payload)
 
   if (validDigest) {
-    let slackURL = await fsPromises.readFile('/var/openfaas/secrets/slack-url', 'utf8')
-
     let body = JSON.parse(event.body)
-    let emoticon = ':thumbsup:'
-    switch (body.action) {
-      case 'cancelled':
-      case 'pending_cancellation':
-        emoticon = ':thumbsdown:'
-      break
 
-      case 'edited':
-      case 'tier_changed':
-      case 'pending_tier_change':
-        emoticon = ':warning:'
-      break
+    if(body.action) {
+      let emoticon = ':thumbsup:'
+      switch (body.action) {
+        case 'cancelled':
+        case 'pending_cancellation':
+          emoticon = ':thumbsdown:'
+        break
+
+        case 'edited':
+        case 'tier_changed':
+        case 'pending_tier_change':
+          emoticon = ':warning:'
+        break
+      }
+
+      let text = `Sponsorship ${body.action} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
+
+      let slackPayload = { 'text': text }
+      let slackURL = await fsPromises.readFile('/var/openfaas/secrets/slack-url', 'utf8')
+      let options = {
+        'method': 'POST',
+        'headers': { 'content-type': 'application/json' },
+        'data': slackPayload,
+        'url': slackURL
+      }
+      axios(options)
     }
-
-    let text = `Sponsorship ${body.action} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
-
-    let slackPayload = { 'text': text }
-
-    let options = {
-      'method': 'POST',
-      'headers': { 'content-type': 'application/json' },
-      'data': slackPayload,
-      'url': slackURL
-    }
-    axios(options)
   }
 
   return context
