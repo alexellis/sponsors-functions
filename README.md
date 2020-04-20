@@ -7,6 +7,11 @@ GitHub Sponsors webhook receiver and Slack forwarder, written in Node.js
 
 This function is hosted on [OpenFaaS Cloud](https://docs.openfaas.com/openfaas-cloud/community-cluster/), see the [commits page for the build logs](https://github.com/alexellis/sponsors-functions/commits/master). The dashboard is private, but contains runtime logs and metrics.
 
+Subscribe to my Insiders Updates by Sponsoring me via GitHub:
+
+* 🐳 [Sponsor now](https://github.com/sponsors/alexellis/) 
+* ⭐️ Show support and [Star OpenFaaS](https://github.com/openfaas/faas)
+
 ## Usage
 
 This function receives and validates a webhook from [GitHub Sponsors](https://github.com/sponsors) using the [node12 template](https://github.com/openfaas/templates/) from [OpenFaaS](https://github.com/openfaas/).
@@ -21,7 +26,11 @@ There's a switch statement on each event, which sends send a "pretty" string suc
 
 ![Example](https://user-images.githubusercontent.com/6358735/74099171-b4a17580-4b18-11ea-8fd9-7139b6a4a05c.png)
 
-## Development or getting your own
+## Deployment
+
+You can pick between [self-hosted OpenFaaS](https://github.com/openfaas/faas) or [OpenFaaS Cloud](https://github.com/openfaas/openfaas-cloud).
+
+### With OpenFaaS Cloud
 
 * Fork the repo
 
@@ -43,5 +52,13 @@ There's a switch statement on each event, which sends send a "pretty" string suc
  ```
 
 * Fire a test event from your sponsors page
+
+### With OpenFaaS or faasd
+
+You can also host a simpler version of OpenFaaS and deploy the function there:
+
+* [OpenFaaS on Kubernetes](https://docs.openfaas.com/deployment/#kubernetes-recommended-for-production-and-for-work)
+
+* [OpenFaaS with containerd (faasd)](https://docs.openfaas.com/deployment/#faasd-with-containerd)
 
 See also: [SponsorshipEvent](https://developer.github.com/v3/activity/events/types/#sponsorshipevent)
