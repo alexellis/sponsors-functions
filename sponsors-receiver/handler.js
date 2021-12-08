@@ -47,7 +47,12 @@ module.exports = async (event, context) => {
           break
       }
 
-      let text = `Sponsorship ${body.action} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
+      let oneTime = ""
+      if(body.sponsorship.tier["is_one_time"] && body.sponsorship.tier["is_one_time"] == "true") {
+        oneTime = " (one time)"
+      }
+
+      let text = `Sponsorship ${body.action} of ${body.sponsorship.sponsorable.login} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}${oneTime}`
 
       let slackPayload = { 'content': text }
       let slackURL = await fsPromises.readFile('/var/openfaas/secrets/discord-sponsors-url', 'utf8')
