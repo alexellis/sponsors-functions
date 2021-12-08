@@ -8,12 +8,13 @@ const hashMethod = 'sha1'
 const axios = require('axios')
 
 module.exports = async (event, context) => {
-  let secret = await fsPromises.readFile('/var/openfaas/secrets/webhook-secret', 'utf8')
+  let secret = await fsPromises.readFile('/var/openfaas/secrets/sponsors-webhook-secret', 'utf8')
 
   let hmac = crypto.createHmac(hashMethod, secret)
-
   hmac.update(event.body)
+
   let digest = hmac.digest('hex')
+
   let payloadDigest = event.headers['x-hub-signature']
 
   let validDigest = payloadDigest === `sha1=${digest}`
@@ -48,8 +49,8 @@ module.exports = async (event, context) => {
 
       let text = `Sponsorship ${body.action} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
 
-      let slackPayload = { 'text': text }
-      let slackURL = await fsPromises.readFile('/var/openfaas/secrets/slack-url', 'utf8')
+      let slackPayload = { 'content': text }
+      let slackURL = await fsPromises.readFile('/var/openfaas/secrets/discord-sponsors-url ', 'utf8')
       let options = {
         'method': 'POST',
         'headers': { 'content-type': 'application/json' },

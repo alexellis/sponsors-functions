@@ -5,13 +5,14 @@ provider:
 
 functions:
   sponsors-receiver:
-    lang: node12
+    lang: node14
     handler: ./sponsors-receiver
-    image: sponsors-receiver:latest
+    image: ${OWNER:-alexellis2}/sponsors-receiver:${TAG:-0.2.0}
     environment:
       write_debug: true
       RAW_BODY: true
     labels:
       com.openfaas.scale.zero: false
     secrets:
-    - sponsors
+    - discord-sponsors-url
+    - sponsors-webhook-secret
