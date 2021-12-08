@@ -50,7 +50,7 @@ module.exports = async (event, context) => {
       let text = `Sponsorship ${body.action} ${emoticon} by ${body.sponsorship.sponsor.login} - ${body.sponsorship.tier.name}`
 
       let slackPayload = { 'content': text }
-      let slackURL = await fsPromises.readFile('/var/openfaas/secrets/discord-sponsors-url ', 'utf8')
+      let slackURL = await fsPromises.readFile('/var/openfaas/secrets/discord-sponsors-url', 'utf8')
       let options = {
         'method': 'POST',
         'headers': { 'content-type': 'application/json' },
