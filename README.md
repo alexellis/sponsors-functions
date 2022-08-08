@@ -1,6 +1,6 @@
 # sponsors-functions
 
-GitHub Sponsors webhook receiver and Slack forwarder, written in Node.js
+GitHub Sponsors webhook receiver and Discord forwarder, written in Node.js
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenFaaS](https://img.shields.io/badge/openfaas-serverless-blue.svg)](https://www.openfaas.com)
@@ -18,7 +18,7 @@ This function receives and validates a webhook from [GitHub Sponsors](https://gi
 
 Each message is verified using the [crypto library](https://nodejs.org/api/crypto.html) and HMAC.
 
-Messages that pass HMAC are then sent over to a secret webhook URL and appear in Slack
+Messages that pass HMAC are then sent over to a secret webhook URL and appear in Discord
 
 It is triggered by any event from [GitHub Sponsors](https://github.com/sponsors/alexellis)
 
