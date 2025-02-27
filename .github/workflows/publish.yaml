@@ -42,6 +42,7 @@ jobs:
         run: >
           OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}" 
           TAG="latest"
+          SERVER="ghcr.io"
           faas-cli publish
           --extra-tag ${{ github.sha }}
           --platforms linux/amd64,linux/arm/v7
@@ -50,6 +51,9 @@ jobs:
           echo ${{secrets.OPENFAAS_PASSWORD}} | 
           faas-cli login --gateway ${{secrets.OPENFAAS_URL}}
           --password-stdin
+      - name: Check server version command works OK
+        run: |
+          faas-cli version --gateway ${{secrets.OPENFAAS_URL}}
       - name: Create discord secret
         run: >
           faas-cli secret create discord-sponsors-url 
@@ -64,4 +68,5 @@ jobs:
         run: >
           OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}"
           TAG="${{ github.sha }}"
+          SERVER="ghcr.io"
           faas-cli deploy --gateway ${{secrets.OPENFAAS_URL}}
