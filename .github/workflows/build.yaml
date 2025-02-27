@@ -7,18 +7,12 @@ on:
   pull_request:
     branches:
       - '*'
-      
-permissions:
-  actions: read
-  checks: write
-  contents: read
-  packages: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
       - name: Get faas-cli
@@ -26,47 +20,19 @@ jobs:
       # - name: Pull custom templates from stack.yml
       #   run: faas-cli template pull stack
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
       - name: Get TAG
         id: get_tag
-        run: echo ::set-output name=TAG::latest-dev
+        run: echo "TAG=latest-dev" >> $GITHUB_OUTPUT
       - name: Get Repo Owner
         id: get_repo_owner
-        run: >
-          echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} |
-          tr '[:upper:]' '[:lower:]')
-      - name: Docker Login
-        run: > 
-          echo ${{secrets.GITHUB_TOKEN}} | 
-          docker login ghcr.io --username 
-          ${{ steps.get_repo_owner.outputs.repo_owner }} 
-          --password-stdin
+        run: |
+          repo_owner=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+          echo "repo_owner=${repo_owner}" >> $GITHUB_OUTPUT
       - name: Publish functions
         run: >
           OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}" 
           TAG="latest"
-          faas-cli publish
-          --extra-tag ${{ github.sha }}
-          --platforms linux/amd64,linux/arm/v7
-      - name: Login
-        run: >
-          echo ${{secrets.OPENFAAS_PASSWORD}} | 
-          faas-cli login --gateway ${{secrets.OPENFAAS_URL}}
-          --password-stdin
-      - name: Create discord secret
-        run: >
-          faas-cli secret create discord-sponsors-url 
-          --gateway ${{secrets.OPENFAAS_URL}}
-          --from-literal "${{ secrets.DISCORD_SPONSORS_URL }}" || echo "Secret already exists"
-      - name: Create GitHub webhook secret
-        run: >
-          faas-cli secret create sponsors-webhook-secret 
-          --gateway ${{secrets.OPENFAAS_URL}}
-          --from-literal "${{ secrets.SPONSORS_WEBHOOK_SECRET }}" || echo "Secret already exists"
-      - name: Deploy
-        run: >
-          OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}"
-          TAG="${{ github.sha }}"
-          faas-cli deploy --gateway ${{secrets.OPENFAAS_URL}}
+          faas-cli build
