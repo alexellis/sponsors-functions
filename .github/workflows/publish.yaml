@@ -1,8 +1,9 @@
 name: publish
 
 on:
-  tags:
-    - '*'
+  push:
+    tags:
+      - '*'
       
 permissions:
   actions: read
