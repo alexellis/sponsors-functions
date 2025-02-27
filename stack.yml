@@ -5,9 +5,9 @@ provider:
 
 functions:
   sponsors-receiver:
-    lang: node14
+    lang: node20
     handler: ./sponsors-receiver
-    image: ghcr.io/${OWNER:-alexellis2}/sponsors-receiver:${TAG:-0.2.0}
+    image: ${SERVER:-docker.io}/${OWNER:-alexellis2}/sponsors-receiver:${TAG:-0.2.1}
     environment:
       write_debug: true
       RAW_BODY: true
