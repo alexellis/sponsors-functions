@@ -44,13 +44,14 @@ jobs:
           registry: ghcr.io
           username: ${{ steps.get_repo_owner.outputs.repo_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish functions
+      - name: Publish functions to latest, SHA and TAG
         run: >
           OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}" 
           TAG="latest"
           SERVER="ghcr.io"
           faas-cli publish
           --extra-tag ${{ github.sha }}
+          --extra-tag ${{ steps.get_tag.outputs.TAG }}
           --platforms linux/amd64
       - name: Login
         run: >
@@ -72,7 +73,7 @@ jobs:
           --replace
           --gateway ${{secrets.OPENFAAS_URL}}
           --from-literal "${{ secrets.SPONSORS_WEBHOOK_SECRET }}" || echo "Secret already exists"
-      - name: Deploy
+      - name: Deploy functions using SHA
         run: >
           OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}"
           TAG="${{ github.sha }}"
