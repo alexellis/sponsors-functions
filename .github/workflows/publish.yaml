@@ -63,13 +63,13 @@ jobs:
       - name: Create discord secret
         run: >
           faas-cli secret create discord-sponsors-url 
-          --update
+          --replace
           --gateway ${{secrets.OPENFAAS_URL}}
           --from-literal "${{ secrets.DISCORD_SPONSORS_URL }}" || echo "Secret already exists"
       - name: Create GitHub webhook secret
         run: >
           faas-cli secret create sponsors-webhook-secret 
-          --update
+          --replace
           --gateway ${{secrets.OPENFAAS_URL}}
           --from-literal "${{ secrets.SPONSORS_WEBHOOK_SECRET }}" || echo "Secret already exists"
       - name: Deploy
