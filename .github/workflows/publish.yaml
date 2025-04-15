@@ -51,7 +51,7 @@ jobs:
           SERVER="ghcr.io"
           faas-cli publish
           --extra-tag ${{ github.sha }}
-          --platforms linux/amd64,linux/arm/v7
+          --platforms linux/amd64
       - name: Login
         run: >
           echo ${{secrets.OPENFAAS_PASSWORD}} | 
