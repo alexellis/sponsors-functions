@@ -16,9 +16,12 @@ jobs:
         with:
           fetch-depth: 1
       - name: Get faas-cli
-        run: curl -sLSf https://cli.openfaas.com | sudo sh
-      # - name: Pull custom templates from stack.yml
-      #   run: faas-cli template pull stack
+        uses: alexellis/arkade-get@master
+        with:
+          faas-cli: latest
+      - name: Get templates
+        run: faas-cli template store pull node20
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
