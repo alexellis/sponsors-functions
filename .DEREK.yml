@@ -1,0 +1,10 @@
+curators:
+ - alexellis
+ - welteki
+ - rgee0
+
+features:
+ - dco_check
+ - release_notes
+
+contributing_url: https://github.com/alexellis/arkade/blob/master/CONTRIBUTING.md
